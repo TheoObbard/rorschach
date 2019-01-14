@@ -1,7 +1,7 @@
 /**
  * Generates a Rorschach image in an HTML5 canvas
  * 
- * @author RGBz
+ * original @author RGBz
  */
 
 /**
@@ -11,6 +11,7 @@
  * @param max the largest number the random number can be
  * @returns a random integer between min and max
  */
+
 function randomRange(min, max) {
   return Math.floor((Math.random() * (max - min)) + min);
 }
@@ -83,11 +84,11 @@ Color.prototype.clone = function () {
  * difference between two colors
  */
 Color.prototype.diff = function (color) {
-  var r = this.red - color.red;
-  var g = this.green - color.green;
-  var b = this.blue - color.blue;
+  let r = this.red - color.red;
+  let g = this.green - color.green;
+  let b = this.blue - color.blue;
 
-  var nonSquareRootedDistance = (r * r) + (g * g) + (b * b);
+  let nonSquareRootedDistance = (r * r) + (g * g) + (b * b);
 
   return nonSquareRootedDistance;
 }
@@ -171,32 +172,34 @@ RorschachPainter.prototype.setInkAmountRange = function (min, max) {
 RorschachPainter.prototype.paint = function (canvasId) {
 
   // Get the canvas context
-  var rorschachCanvas = document.getElementById(canvasId);
-  var context = rorschachCanvas.getContext('2d');
+  let rorschachCanvas = document.getElementById(canvasId);
+  let context = rorschachCanvas.getContext('2d');
 
   // Grab a color from the palette
-  var baseColor = this.palette[randomInt(this.palette.length)];
+  let baseColor = this.palette[randomInt(this.palette.length)];
 
   // Generate a random brush
-  var brush = new Brush(
+  let brush = new Brush(
     randomRange(1, this.blobWidthMax), // Random blob width
     randomRange(1, this.blobHeightMax), // Random blob height
     baseColor.clone()); // Start with a base color from the palette
 
   // Pick a random point to draw first
-  var x = randomInt(rorschachCanvas.width / 2);
-  var y = randomInt(rorschachCanvas.height);
+  let x = randomInt(rorschachCanvas.width / 2);
+  let y = randomInt(rorschachCanvas.height);
 
   // Maximum range of values a color can stray
-  var COLOR_RANGE = Math.pow(8, 2); // Squared since the color distance algorithm does the same 
+  let COLOR_RANGE = Math.pow(8, 2); // Squared since the color distance algorithm does the same 
 
   // The number of blobs to make
-  var inkAmount = randomRange(this.inkAmountMin, this.inkAmountMax);
+  let inkAmount = randomRange(this.inkAmountMin, this.inkAmountMax);
 
   // Draw a bunch of random blobs
   for (i = 0; i < inkAmount; i++) {
 
     // Draw that blob and mirror it!
+    context.filter = 'blur(1px)';
+
     context.fillStyle = brush.color.toString();
     context.fillRect(x, y, brush.width, brush.height);
     context.fillRect(rorschachCanvas.width - x, y, brush.width, brush.height);
