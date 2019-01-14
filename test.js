@@ -185,8 +185,8 @@ RorschachPainter.prototype.paint = function (canvasId) {
     baseColor.clone()); // Start with a base color from the palette
 
   // Pick a random point to draw first
-  let x = randomInt(rorschachCanvas.width / 2);
-  let y = randomInt(rorschachCanvas.height);
+  let x = randomInt(rorschachCanvas.width / 2 - 20);
+  let y = randomInt(rorschachCanvas.height - 20);
 
   // Maximum range of values a color can stray
   let COLOR_RANGE = Math.pow(8, 2); // Squared since the color distance algorithm does the same 
@@ -198,7 +198,7 @@ RorschachPainter.prototype.paint = function (canvasId) {
   for (i = 0; i < inkAmount; i++) {
 
     // Draw that blob and mirror it!
-    context.filter = 'blur(1px)';
+    context.filter = 'blur(.8px)';
 
     context.fillStyle = brush.color.toString();
     context.fillRect(x, y, brush.width, brush.height);
@@ -226,10 +226,10 @@ RorschachPainter.prototype.paint = function (canvasId) {
 
     // Make sure the blob is inside the width of half the canvas
     if (x < 0) {
-      x = randomInt(rorschachCanvas.width / 2);
+      x = randomInt(rorschachCanvas.width / 2 - 10);
 
     } else if (x > rorschachCanvas.width / 2) {
-      x = randomInt(rorschachCanvas.width / 2);
+      x = randomInt(rorschachCanvas.width / 2 - 10);
     }
 
     // Make sure the blob is inside the height of the canvas
